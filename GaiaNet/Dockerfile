@@ -1,7 +1,7 @@
 # Используем официальный образ Python в качестве базового
 FROM python:3.9-slim
 
-ENV TARGET_URL some-url
+ENV TARGET_URL url
 # Устанавливаем рабочую директорию в контейнере
 WORKDIR /app
 
