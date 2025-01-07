@@ -4,6 +4,24 @@ import time
 import random
 import logging
 from faker import Faker
+import functools
+
+# декоратор повторный попыток
+def retry(retries=3):
+    def decorator_retry(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            attempts = 0
+            while attempts < retries:
+                try:
+                    return func(*args, **kwargs)
+                except Exception as e:
+                    attempts += 1
+                    if attempts == retries:
+                        raise e
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator_retry
 
 # Настройка логирования для вывода в консоль
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
@@ -19,25 +37,20 @@ headers = {
 faker = Faker()
 
 # Функция для отправки запроса
+@retry(retries=3)
 def send_request():
-    try:
-        # Генерация случайного вопроса с использованием Faker
-        question = faker.sentence(nb_words=30)
-        # Формирование тела запроса
-        data = {
-            "messages": [
-                {"role": "system", "content": "you're a great rust developer. You need to write an enigma-type encoder that will encode and decode the message transmitted by the user."},
-                {"role": "user", "content": question}
-            ]
-        }
-        logging.info(f"Отправка запроса с вопросом: {question}")
-        response = requests.post(url, headers=headers, json=data)
-        if response.status_code == 200:
-            logging.info(f"Ответ: {response.json()}")
-        else:
-            logging.error(f"Ошибка получения ответа, статус-код: {response.status_code}")
-    except Exception as e:
-        logging.error(f"Произошла ошибка при отправке запроса: {str(e)}")
+    # Генерация случайного вопроса с использованием Faker
+    question = faker.sentence(nb_words=30)
+    # Формирование тела запроса
+    data = {
+        "messages": [
+            {"role": "system", "content": "you're a great rust developer. You need to write an enigma-type encoder that will encode and decode the message transmitted by the user."},
+            {"role": "user", "content": question}
+        ]
+    }
+    logging.info(f"Отправка запроса с вопросом: {question}")
+    response = requests.post(url, headers=headers, json=data)
+    logging.info(f"Ответ: {response.json()}")
 
 # Основной цикл
 def main():
