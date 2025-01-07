@@ -1,7 +1,0 @@
-services:
-  giaga-requests-gen:
-    build:
-      context: ./service1
-      dockerfile: Dockerfile
-    environment:
-      - TARGET_URL=TARGET_URL
