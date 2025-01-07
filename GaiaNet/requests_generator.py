@@ -8,7 +8,7 @@ from faker import Faker
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
 
 # URL и заголовки для запроса
-url = input("Введите URL для отправки запроса: ")
+url = os.getenv('TARGET_URL')
 headers = {
     'accept': 'application/json',
     'Content-Type': 'application/json'
