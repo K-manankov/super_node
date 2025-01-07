@@ -21,11 +21,11 @@ faker = Faker()
 def send_request():
     try:
         # Генерация случайного вопроса с использованием Faker
-        question = faker.sentence(nb_words=10)
+        question = faker.sentence(nb_words=30)
         # Формирование тела запроса
         data = {
             "messages": [
-                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "system", "content": "you're a great rust developer. You need to write an enigma-type encoder that will encode and decode the message transmitted by the user."},
                 {"role": "user", "content": question}
             ]
         }
