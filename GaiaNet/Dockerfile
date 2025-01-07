@@ -1,7 +1,7 @@
 # Используем официальный образ Python в качестве базового
 FROM python:3.9-slim
 
-ENV TARGET_URL
+ENV TARGET_URL https://0xeea001a0e8d12e122c72677edf64924fa59a2b2b.us.gaianet.network/v1/chat/completions
 # Устанавливаем рабочую директорию в контейнере
 WORKDIR /app
 
