@@ -54,22 +54,22 @@ def send_request():
 
 # Основной цикл
 def main():
-    sleep_hours = 8  # Часы для сна
+    sleep_hours = 6  # Часы для сна
     sleep_seconds = sleep_hours * 3600  # Перевод в секунды
 
     while True:
         # Определяем случайное количество запросов перед длинным перерывом
-        num_requests = random.randint(6, 12)  # От 6 до 12 запросов (в среднем около часа)
+        num_requests = random.randint(60, 120)  # От 6 до 12 запросов (в среднем около часа)
 
         for _ in range(num_requests):
             send_request()
             # Случайная задержка между запросами от 1 до 5 минут
-            delay = random.randint(60, 300)
+            delay = random.randint(15, 120)
             logging.info(f"Ожидание {delay // 60} минут...")
             time.sleep(delay)
 
         # Длинный перерыв от 30 минут до 1 часа
-        long_break = random.randint(1800, 3600)
+        long_break = random.randint(900, 1800)
         logging.info(f"Перерыв на {long_break // 60} минут...")
         time.sleep(long_break)
 
